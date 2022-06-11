@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class BasketIndexRequest extends FormRequest
@@ -24,7 +25,11 @@ class BasketIndexRequest extends FormRequest
     public function rules()
     {
         return [ // id User
-            'id' => 'required|numeric'
+            'id' => [
+                'required',
+                'numeric',
+                Rule::exists('users', 'id')
+            ]
         ];
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class TypeStoreRequest extends FormRequest
@@ -24,7 +26,12 @@ class TypeStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:255'
+            'name' => [
+                'required',
+                'max:255',
+                'string',
+                Rule::unique('types')
+            ]
         ];
     }
 }

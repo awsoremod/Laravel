@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('brands', function (Blueprint $table) {
             $table->mediumIncrements('id'); // max 16_777_215
-            $table->string('name')->unique();
+            $table->string('name')->unique(); // TO DO длинну от 3 до 255
 
             $table->timestamps();
         });

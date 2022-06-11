@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('types', function (Blueprint $table) {
             $table->smallIncrements('id'); // max 65_535
-            $table->string('name')->unique();
+            $table->string('name')->unique(); // TO DO длинну от 3 до 255
 
             $table->timestamps();
         });

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class BasketStoreRequest extends FormRequest
@@ -24,8 +25,16 @@ class BasketStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'idUser' => 'required|numeric',
-            'idProduct' => 'required|numeric'
+            'idUser' => [
+                'required',
+                'numeric',
+                Rule::exists('users', 'id'),
+            ],
+            'idProduct' => [
+                'required',
+                'numeric',
+                Rule::exists('products', 'id')
+            ]
         ];
     }
 }

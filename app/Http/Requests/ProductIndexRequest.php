@@ -36,7 +36,11 @@ class ProductIndexRequest extends FormRequest
                 'required',
                 Rule::in(['yes', 'no']),
             ],
-            'id' => 'required|numeric' // id типа
+            'id' => [
+                'required',
+                'numeric',
+                Rule::exists('products', 'type_id')
+            ] // id типа
         ];
     }
 }

@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class BrandIndexRequest extends FormRequest
+class LoginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,15 +25,19 @@ class BrandIndexRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => [
+            'login' => [
                 'required',
-                'numeric',
-                Rule::exists('types', 'id')
-            ], // id типа
-            'stock' => [ // yes - в наличии
-                'required',
-                Rule::in(['yes', 'no']),
+                'max:255',
+                'min:3',
+                'string',
+                Rule::exists('users', 'login')
             ],
+            'password' => [
+                'required',
+                'max:255',
+                'min:3',
+                'string',
+            ]
         ];
     }
 }

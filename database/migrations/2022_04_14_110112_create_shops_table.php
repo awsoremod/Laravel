@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('shops', function (Blueprint $table) {
             $table->tinyIncrements('id'); // max 255
-            $table->string('address')->unique();
+            $table->string('address')->unique(); // TO DO длинну от 3 до 255
 
             $table->timestamps();
         });
