@@ -17,11 +17,17 @@ class TypeController extends Controller
      */
     public function index() // возвращает типы у которых есть продукт
     {
-        $types = DB::select(
+        $types = Type::select('types.id', 'types.name')
+        ->join('products', 'types.id', '=', 'products.type_id')
+        ->whereColumn('type_id', 'types.id')
+        ->distinct()
+        ->get();
+
+        /*$types = DB::select(
             "SELECT DISTINCT types.name AS name, types.id AS id
             FROM products
             JOIN types ON products.type_id = types.id"
-        );
+        );*/
         return TypeResource::collection($types);
     }
 

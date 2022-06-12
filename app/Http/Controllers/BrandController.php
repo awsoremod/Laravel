@@ -16,13 +16,17 @@ class BrandController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(BrandIndexRequest $request) // возвращает бренды
+    /*public function index(BrandIndexRequest $request) // возвращает бренды
     {
         $request->validated();
         $id = $request->id;
         $stock = $request->stock;
         $addSqlStock = '';
         if ($stock === 'yes') {
+           // Brand::select('brands.id', 'brands.name')
+           // ->join('products', '')
+           // ->join()
+
             $addSqlStock = "JOIN product_shops ON products.id = product_shops.product_id";
         }
         $brands = DB::select(
@@ -32,6 +36,38 @@ class BrandController extends Controller
         {$addSqlStock}
         WHERE products.type_id = {$id}"
         );
+        return BrandResource::collection($brands);
+    }*/
+
+        /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(BrandIndexRequest $request) // возвращает бренды
+    {
+        $request->validated();
+        $id = $request->id;
+        $stock = $request->stock;
+        $addSqlStock = '';
+        if ($stock === 'yes') {
+            $brands = Brand::select('brands.id', 'brands.name')
+            ->join('products', 'brands.id', '=', 'products.brand_id')
+            ->join('product_shops', 'product_shops.product_id', '=', 'products.id')
+            ->where('products.type_id','=', $id)
+            ->distinct()
+            ->get();;
+
+            //$addSqlStock = "JOIN product_shops ON products.id = product_shops.product_id";
+        }
+        else{
+            $brands = Brand::select('brands.id', 'brands.name')
+            ->join('products', 'brands.id', '=', 'products.brand_id')
+            ->where('products.type_id','=', $id)
+            ->distinct()
+            ->get();
+
+        };
         return BrandResource::collection($brands);
     }
 

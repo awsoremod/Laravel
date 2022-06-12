@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Product;
+use App\Models\Basket;
+use App\Models\BasketProduct;
 use App\Http\Resources\BasketResource;
 use App\Http\Requests\BasketIndexRequest;
 use App\Http\Requests\BasketStoreRequest;
@@ -18,9 +21,17 @@ class BasketController extends Controller
     public function index(BasketIndexRequest $request) // Возвращает продукты по id пользователя
     {
         $request->validated();
-        $id = $request->id;
+        $id = $request->id;      
 
-        $products = DB::select(
+        $products = Product::select('products.id', 'products.type_id', 'types.name', 'brands.name', 'products.name', 'products.price')
+        ->join('brands', 'brands.id', '=', 'products.brand_id')
+        ->join('types', 'types.id', '=', 'products.type_id')
+        ->join('basket_products', 'basket_products.product_id', '=', 'products.id')
+        ->where('basket_id', '=', [Basket::select('user_id')->where('user_id', '=', $id)->get()])
+        ->get();
+
+
+        /*$products = DB::select(
             "SELECT products.id, products.type_id, types.name,
             brands.name, products.name, products.price
             FROM products
@@ -31,8 +42,9 @@ class BasketController extends Controller
     		    SELECT id
                 FROM baskets
                 WHERE user_id = {$id})"
-        );
+        );*/
         return BasketResource::collection($products); // тестить
+        
     }
 
     /**
@@ -46,7 +58,14 @@ class BasketController extends Controller
         $request->validated();
         $idUser = $request->idUser;
         $idProduct = $request->idProduct;
-
+        
+      
+       /* $added_product = BasketProduct::create(
+            [
+            ['basket_id' => [Basket::select('id')->where('user_id', '=', $idUser)->get()]],
+            ['product_id' => $idProduct]
+        ]);*/
+       
         $added_product = DB::insert(
             "INSERT INTO basket_products (product_id, basket_id)
             VALUES ({$idProduct}, (
