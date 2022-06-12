@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('basket_products', function (Blueprint $table) {
-            $table->unsignedInteger('basket_id')->nullable();
+            $table->unsignedInteger('basket_id');
             $table->foreignId('product_id')
                 ->constrained()
                 ->cascadeOnDelete()

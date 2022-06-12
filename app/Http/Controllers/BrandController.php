@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+//use Illuminate\Support\Facades\DB;
 use App\Http\Resources\BrandResource;
 use App\Http\Requests\BrandIndexRequest;
 use App\Http\Requests\BrandStoreRequest;
@@ -58,7 +58,6 @@ class BrandController extends Controller
             ->distinct()
             ->get();;
 
-            //$addSqlStock = "JOIN product_shops ON products.id = product_shops.product_id";
         }
         else{
             $brands = Brand::select('brands.id', 'brands.name')
