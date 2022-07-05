@@ -1,5 +1,5 @@
 # Интернет магазин
-Аналог https://github.com/awsoremod/MSSQL-EXPRESS-REACT с добавлением авторизации пользователей с ролями.
+Аналог https://github.com/awsoremod/MSSQL-EXPRESS-REACT с добавлением авторизации пользователей с ролями. Только недоделанный backend.
 
 ## База данных
 ![diagram](https://user-images.githubusercontent.com/71494768/177319879-b900e8e5-d4dc-4955-8d87-e2b002386eac.png)
